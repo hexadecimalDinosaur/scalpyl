@@ -27,6 +27,7 @@
           flask
           self.packages.${system}.python311Packages.decompyle3
           self.packages.${system}.python311Packages.x-python
+          self.packages.${system}.python311Packages.xasm
 
           jupyter
           ipython
@@ -73,17 +74,20 @@
           '';
         };
         packages = {
-          python311Packages = {
+          python311Packages = rec {
             decompyle3 = (pkgs.python311Packages.callPackage ./nixpkgs/decompyle3.nix { });
             x-python = (pkgs.python311Packages.callPackage ./nixpkgs/x-python.nix { });
+            xasm = (pkgs.python311Packages.callPackage ./nixpkgs/xasm.nix { inherit x-python; });
           };
-          python312Packages = {
+          python312Packages = rec {
              decompyle3 = (pkgs.python312Packages.callPackage ./nixpkgs/decompyle3.nix { });
              x-python = (pkgs.python312Packages.callPackage ./nixpkgs/x-python.nix { });
+             xasm = (pkgs.python311Packages.callPackage ./nixpkgs/xasm.nix { inherit x-python; });
           };
-          python313Packages = {
+          python313Packages = rec {
              decompyle3 = (pkgs.python313Packages.callPackage ./nixpkgs/decompyle3.nix { });
              x-python = (pkgs.python313Packages.callPackage ./nixpkgs/x-python.nix { });
+             xasm = (pkgs.python311Packages.callPackage ./nixpkgs/xasm.nix { inherit x-python; });
           };
         };
       }
