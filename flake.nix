@@ -49,11 +49,19 @@
           python-lsp-ruff
           pytest
         ]));
+        pypy-env = (pkgs.pypy310.withPackages (p: with p; [
+          xdis
+          uncompyle6
+          self.packages.${system}.pypy310Packages.decompyle3
+          self.packages.${system}.pypy310Packages.x-python
+          self.packages.${system}.pypy310Packages.xasm
+        ]));
       in
       {
         devShells.default = pkgs.mkShell {
           packages = [
             python-env
+            pypy-env
           ];
           buildInputs = [
             # pkgs.webkitgtk_6_0
@@ -74,6 +82,11 @@
           '';
         };
         packages = {
+          pypy310Packages = rec {
+            decompyle3 = (pkgs.pypy310.pkgs.callPackage ./nixpkgs/decompyle3.nix { });
+            x-python = (pkgs.pypy310.pkgs.callPackage ./nixpkgs/x-python.nix { });
+            xasm = (pkgs.pypy310.pkgs.callPackage ./nixpkgs/xasm.nix { inherit x-python; });
+          };
           python311Packages = rec {
             decompyle3 = (pkgs.python311Packages.callPackage ./nixpkgs/decompyle3.nix { });
             x-python = (pkgs.python311Packages.callPackage ./nixpkgs/x-python.nix { });
