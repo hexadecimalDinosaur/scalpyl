@@ -22,16 +22,13 @@ class XdisDisassembler(Disassembler):
         line_num = 0
         jumps: dict[int, list[int]] = {}
         for i in bc.get_instructions(code_obj):
-            obj = Instruction()
-            obj.opcode = i.opcode
-            obj.opname = i.opname
-            obj.offset = i.offset
+            obj = Instruction(offset=i.offset, opcode=i.opcode, opname=i.opname, arg=i.arg,
+                              raw=code_obj.co_code[i.offset: i.offset + 2])
             if i.starts_line is not None:
                 line_num = i.starts_line
                 obj.starts_line = True
             obj.line_num = line_num
-            obj.arg = i.arg
-            obj.argval = i.argval
+            obj.arg_value = i.argval
 
             instructions.append(obj)
 
