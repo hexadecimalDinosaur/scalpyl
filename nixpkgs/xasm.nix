@@ -32,7 +32,7 @@ buildPythonPackage rec {
     x-python
   ];
 
-  pythonImportsCheck = [ "xpython" ];
+  pythonImportsCheck = [ "xasm" ];
 
   meta = {
     description = "Python cross version bytecode/wordcode assembler";
