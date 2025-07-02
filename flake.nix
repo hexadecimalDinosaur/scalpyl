@@ -16,7 +16,21 @@
             ];
           };
         });
-        python-env = (pkgs.python311.withPackages (p: with p; [
+        python_ver = pkgs.python312;
+        python = python_ver.override {
+          packageOverrides = pyfinal: pyprev: rec {
+            xdis = pyprev.xdis.overrideAttrs (final: old: {
+              patches = [
+                ./nixpkgs/xdis.patch
+              ];
+            });
+            decompyle3 = pyfinal.callPackage ./nixpkgs/decompyle3.nix {};
+            x-python = pyfinal.callPackage ./nixpkgs/x-python.nix {};
+            xasm = pyfinal.callPackage ./nixpkgs/xasm.nix { inherit x-python; };
+            pyinstxtractor-ng = pyfinal.callPackage ./nixpkgs/pyinstxtractor-ng.nix {};
+          };
+        };
+        python-env = (python.withPackages (p: with p; [
           requests
           xdis
           uncompyle6
@@ -25,10 +39,10 @@
           pywebview
           qtpy
           flask
-          self.packages.${system}.python311Packages.decompyle3
-          self.packages.${system}.python311Packages.x-python
-          self.packages.${system}.python311Packages.xasm
-          self.packages.${system}.python311Packages.pyinstxtractor-ng
+          decompyle3
+          x-python
+          xasm
+          pyinstxtractor-ng
 
           jupyter
           ipython
