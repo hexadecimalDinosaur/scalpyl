@@ -64,6 +64,8 @@
           python-lsp-ruff
           pytest
           pyinstaller
+          setuptools
+          build
         ]));
         pypy-env = (pkgs.pypy310.withPackages (p: with p; [
           xdis
