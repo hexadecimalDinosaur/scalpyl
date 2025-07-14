@@ -1,4 +1,5 @@
 from types import CodeType
+from sys import version_info
 
 from scalpyl.disassemblers.dis import DisDisassembler
 from scalpyl.disassemblers.base import Disassembler
@@ -14,10 +15,16 @@ def generic_basic_test(dis: Disassembler):
     return_value = b"S\x00"
     consts = (None,)
 
-    co = CodeType(0, 0, 0, 0, 1, 0,
-                  nop + load_const + return_value, consts, (), (),
-                  FILENAME, NAME, NAME, 1,
-                  b'\xf0\x03\x01\x01\x01\xd8\x00\x04\x80\x04', b'', (), ())
+    if version_info.minor >= 11:
+        co = CodeType(0, 0, 0, 0, 1, 0,
+                      nop + load_const + return_value, consts, (), (),
+                      FILENAME, NAME, NAME, 1,
+                      b'\xf0\x03\x01\x01\x01\xd8\x00\x04\x80\x04', b'', (), ())
+    elif version_info.minor >= 10:
+        co = CodeType(0, 0, 0, 0, 1, 0,
+                      nop + load_const + return_value + consts, consts, (), ()
+                      FILENAME, NAME, 1,
+                      b'\xf0\x03\x01\x01\x01\xd8\x00\x04\x80\x04', (), ())
     block = dis.load_block(co)
 
     assert block.filename == FILENAME
