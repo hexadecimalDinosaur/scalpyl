@@ -17,7 +17,7 @@ class XdisDisassembler(Disassembler):
         self.op_module = get_opcode_module(opc)
 
     def disassemble(self, code_obj: CodeType) -> tuple[Instruction, ...]:
-        bc = Bytecode(code_obj, self.opc)
+        bc = Bytecode(code_obj, self.op_module)
         instructions = []
         line_num = 0
         jumps: dict[int, list[int]] = {}
@@ -54,4 +54,5 @@ class XdisDisassembler(Disassembler):
     def load_block(self, code_obj: CodeType | Code) -> CodeBlock:
         if isinstance(code_obj, Code):
             self.opc = code_obj.version_tuple
+            self.op_module = get_opcode_module(code_obj.version_tuple)
         return super().load_block(code_obj)
