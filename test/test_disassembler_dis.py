@@ -24,7 +24,7 @@ def generic_basic_test(dis: Disassembler):
         co = CodeType(0, 0, 0, 0, 1, 0,
                       nop + load_const + return_value, consts, (), (),
                       FILENAME, NAME, 1,
-                      b'\xf0\x03\x01\x01\x01\xd8\x00\x04\x80\x04', (), ())
+                      b'', (), ())
     block = dis.load_block(co)
 
     assert block.filename == FILENAME
@@ -38,8 +38,9 @@ def generic_basic_test(dis: Disassembler):
 
     assert block.instructions[0].opname == "NOP"
     assert block.instructions[0].raw == nop
-    assert block.instructions[0].line_num == 0
-    assert block.instructions[0].starts_line == True
+    if version_info.minor >= 11:
+        assert block.instructions[0].line_num == 0
+        assert block.instructions[0].starts_line == True
     assert block.instructions[1].opname == "LOAD_CONST"
     assert block.instructions[1].raw == load_const
     assert block.instructions[1].arg == 0
