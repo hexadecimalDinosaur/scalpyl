@@ -29,6 +29,9 @@ classifiers = [
 Homepage = "https://github.com/hexadecimalDinosaur/scalpyl"
 
 [project.optional-dependencies]
+pyinstxtractor = [
+    "pyinstxtractor-ng>=2025.1.6"
+]
 dev = [
     "pytest"
 ]
