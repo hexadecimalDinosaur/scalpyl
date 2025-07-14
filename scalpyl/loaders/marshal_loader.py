@@ -8,6 +8,7 @@ from scalpyl.loaders.base import Code, Loader
 
 
 class MarshalLoader(Loader):
+    @staticmethod
     def load_file(file: IO[bytes], filename="<unknown>") -> Code:
         magic_bytes = file.read(4)
         magic_int = unpack("<Hcc", magic_bytes)[0]
