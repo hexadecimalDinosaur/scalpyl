@@ -3,21 +3,7 @@ from typing import IO, Optional
 from types import CodeType
 from platform import python_version_tuple
 
-
-class Code:
-    code: CodeType
-    version_tuple: tuple = python_version_tuple()
-    filename: Optional[str] = None
-    timestamp: Optional[int] = None
-    is_pypy: bool = False
-
-    def __init__(self, code: CodeType, version_tuple: tuple = python_version_tuple(),
-                 filename: Optional[str] = None, timestamp: Optional[int] = None, is_pypy: bool = False):
-        self.code = code
-        self.version_tuple = version_tuple
-        self.filename = filename
-        self.timestamp = timestamp
-        self.is_pypy = is_pypy
+from scalpyl.code.block import CodeBlock
 
 
 class Loader:
@@ -27,5 +13,5 @@ class Loader:
 
     @staticmethod
     @abstractmethod
-    def load_file(file: IO[bytes], filename="<unknown>") -> Code:
+    def load_file(file: IO[bytes], filename="<unknown>") -> CodeBlock:
         ...

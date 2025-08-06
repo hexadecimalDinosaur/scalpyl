@@ -4,9 +4,9 @@ from types import CodeType
 from sys import version_info
 
 from scalpyl.code.bytecode import Instruction
-from scalpyl.code.block import CodeBlock
+from scalpyl.code.block import DisassembledCode
 from scalpyl.disassemblers.base import Disassembler
-from scalpyl.loaders.base import Code
+from scalpyl.loaders.base import CodeBlock
 
 
 class XdisDisassembler(Disassembler):
@@ -51,8 +51,8 @@ class XdisDisassembler(Disassembler):
 
         return tuple(instructions)
 
-    def load_block(self, code_obj: CodeType | Code) -> CodeBlock:
-        if isinstance(code_obj, Code):
+    def load_block(self, code_obj: CodeType | CodeBlock) -> DisassembledCode:
+        if isinstance(code_obj, CodeBlock):
             self.opc = code_obj.version_tuple
             self.op_module = get_opcode_module(code_obj.version_tuple)
         return super().load_block(code_obj)

@@ -1,8 +1,9 @@
 from scalpyl.code.bytecode import Instruction
-from scalpyl.code.block import CodeBlock, CodeFlags
+from scalpyl.code.block import DisassembledCode, CodeFlags, CodeBlock
 
 __all__ = [
     "Instruction",
-    "CodeBlock",
-    "CodeFlags"
+    "DisassembledCode",
+    "CodeFlags",
+    "CodeBlock"
 ]

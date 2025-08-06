@@ -1,9 +1,9 @@
 from abc import abstractmethod
 from types import CodeType
 
-from scalpyl.code.block import CodeBlock, CodeFlags
+from scalpyl.code.block import DisassembledCode, CodeFlags
 from scalpyl.code.bytecode import Instruction
-from scalpyl.loaders.base import Code
+from scalpyl.loaders.base import CodeBlock
 
 
 class Disassembler:
@@ -11,10 +11,10 @@ class Disassembler:
     def disassemble(self, code_obj: CodeType) -> tuple[Instruction, ...]:
         ...
 
-    def load_block(self, code_obj: CodeType | Code) -> CodeBlock:
-        if isinstance(code_obj, Code):
+    def load_block(self, code_obj: CodeType | CodeBlock) -> DisassembledCode:
+        if isinstance(code_obj, CodeBlock):
             code_obj = code_obj.code
-        block = CodeBlock()
+        block = DisassembledCode()
 
         block.filename = code_obj.co_filename
         block.name = code_obj.co_name

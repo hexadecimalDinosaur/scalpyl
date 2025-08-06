@@ -1,5 +1,7 @@
-from typing import Any
+from typing import Any, Optional
+from types import CodeType
 import inspect
+from platform import python_version_tuple
 
 from scalpyl.code.bytecode import Instruction
 
@@ -54,6 +56,22 @@ class CodeFlags:
 
 
 class CodeBlock:
+    code: CodeType
+    version_tuple: tuple = python_version_tuple()
+    filename: Optional[str] = None
+    timestamp: Optional[int] = None
+    is_pypy: bool = False
+
+    def __init__(self, code: CodeType, version_tuple: tuple = python_version_tuple(),
+                 filename: Optional[str] = None, timestamp: Optional[int] = None, is_pypy: bool = False):
+        self.code = code
+        self.version_tuple = version_tuple
+        self.filename = filename
+        self.timestamp = timestamp
+        self.is_pypy = is_pypy
+
+
+class DisassembledCode:
     filename: str = None
     name: str = None
     firstlineno: int
@@ -72,7 +90,7 @@ class CodeBlock:
     flags: CodeFlags
 
     instructions: tuple[Instruction, ...]
-    children: tuple["CodeBlock", ...]
+    children: tuple["DisassembledCode", ...]
 
     def __init__(self):
         self.firstlineno = 1

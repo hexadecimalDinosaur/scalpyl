@@ -1,5 +1,4 @@
-from scalpyl.loaders.base import Code
-from scalpyl.code import CodeBlock, CodeFlags, Instruction
+from scalpyl.code import DisassembledCode, CodeFlags, Instruction, CodeBlock
 
 from scalpyl.disassemblers.dis import DisDisassembler
 from scalpyl.disassemblers.xdis import XdisDisassembler
@@ -11,8 +10,8 @@ from scalpyl.loaders.source_loader import SourceLoader
 
 
 __all__ = [
-    "Code",
-    "CodeBlock", "CodeFlags", "Instruction",
+    "CodeBlock",
+    "DisassembledCode", "CodeFlags", "Instruction",
     "DisDisassembler", "XdisDisassembler",
     "MarshalLoader", "XdisLoader", "SourceLoader",
 ]

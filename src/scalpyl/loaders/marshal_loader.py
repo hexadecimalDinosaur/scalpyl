@@ -4,12 +4,13 @@ from struct import unpack
 from typing import IO
 from platform import python_implementation, python_version
 
-from scalpyl.loaders.base import Code, Loader
+from scalpyl.code.block import CodeBlock
+from scalpyl.loaders.base import Loader
 
 
 class MarshalLoader(Loader):
     @staticmethod
-    def load_file(file: IO[bytes], filename="<unknown>") -> Code:
+    def load_file(file: IO[bytes], filename="<unknown>") -> CodeBlock:
         magic_bytes = file.read(4)
         magic_int = unpack("<Hcc", magic_bytes)[0]
         ts = file.read(4)
@@ -26,4 +27,4 @@ class MarshalLoader(Loader):
                 python_implementation(), python_version()
             ))
 
-        return Code(co, version_info, filename, timestamp, False)
+        return CodeBlock(co, version_info, filename, timestamp, False)
