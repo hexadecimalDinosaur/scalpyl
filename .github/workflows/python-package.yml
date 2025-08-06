@@ -6,7 +6,7 @@ name: Python package
 on:
   push:
     branches: [ "main" ]
-    paths: [ "src/**", "pyproject.toml" ]
+    paths: [ "src/**", "pyproject.toml", ".github/workflows/python-package.yml" ]
   pull_request:
     branches: [ "main" ]
     paths: [ "src/**", "pyproject.toml" ]
@@ -25,7 +25,6 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-        cache: 'pip'
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
