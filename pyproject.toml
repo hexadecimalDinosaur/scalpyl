@@ -17,7 +17,8 @@ license = "BSD-3-Clause"
 readme = "README.md"
 
 dependencies = [
-    "xdis~=6.1.3"
+    "xdis~=6.1.3",
+    "pyinstxtractor-ng>=2025.1.6"
 ]
 
 classifiers = [
@@ -29,9 +30,6 @@ classifiers = [
 Homepage = "https://github.com/hexadecimalDinosaur/scalpyl"
 
 [project.optional-dependencies]
-pyinstxtractor = [
-    "pyinstxtractor-ng>=2025.1.6"
-]
 dev = [
     "pytest"
 ]
