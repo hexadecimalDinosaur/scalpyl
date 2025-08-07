@@ -1,4 +1,4 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABCMeta
 from typing import IO, Optional
 from types import CodeType
 from platform import python_version_tuple
@@ -6,7 +6,7 @@ from platform import python_version_tuple
 from scalpyl.code.block import CodeBlock
 
 
-class Loader:
+class Loader(metaclass=ABCMeta):
     accepted_file_types: list[str]
     accepted_versions: Optional[list[str]] = None
 

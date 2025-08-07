@@ -1,4 +1,4 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABCMeta
 from types import CodeType
 
 from scalpyl.code.block import DisassembledCode, CodeFlags
@@ -6,12 +6,12 @@ from scalpyl.code.bytecode import Instruction
 from scalpyl.loaders.base import CodeBlock
 
 
-class Disassembler:
+class Disassembler(metaclass=ABCMeta):
     @abstractmethod
     def disassemble(self, code_obj: CodeType) -> tuple[Instruction, ...]:
         ...
 
-    def load_block(self, code_obj: CodeType | CodeBlock) -> DisassembledCode:
+    def load_block(self, code_obj: CodeType | CodeBlock, recursive: bool=True) -> DisassembledCode:
         if isinstance(code_obj, CodeBlock):
             code_obj = code_obj.code
         block = DisassembledCode()
@@ -34,6 +34,9 @@ class Disassembler:
         block.flags = CodeFlags(code_obj.co_flags)
 
         block.instructions = self.disassemble(code_obj)
-        block.children = tuple(self.load_block(c) for c in code_obj.co_consts if isinstance(c, CodeType))
+        if recursive:
+            block.children = tuple(self.load_block(c) for c in code_obj.co_consts if isinstance(c, CodeType))
+        else:
+            block.children = tuple()
 
         return block
