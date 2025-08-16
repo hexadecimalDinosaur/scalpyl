@@ -40,3 +40,15 @@ dev = [
 
 # [project.scripts]
 # cli-name = ""
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "--mypy"
+testpaths = [
+    "test"
+]
+
+[tool.mypy]
+warn_return_any = true
+warn_unused_configs = true
+files = "src/scalpyl/**/*.py"
