@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbb";  # python 3.12.10
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     nur = {
       url = "github:hexadecimalDinosaur/nur";
@@ -26,15 +26,17 @@
         inherit system;
         overlays = [ nur.overlays.python ];
       });
+      # python 3.12.11
       python-env = (pkgs.python312.withPackages (p: with p; [
         requests
-        xdis
-        uncompyle6
-        decompyle3
-        x-python
-        xasm
-        pyinstxtractor-ng
+        xdis  # 6.1.5
+        uncompyle6  # 3.9.2
+        decompyle3  # 3.9.2
+        x-python  # 1.5.2
+        xasm  # 1.2.1.dev0
+        pyinstxtractor-ng  # 2025.1.6
         dearpygui
+        pylingual  # 0.1.0
 
         jupyter
         ipython
@@ -68,7 +70,6 @@
       devShells.default = pkgs.mkShell {
         packages = [
           python-env
-          pkgs.pypy310
         ];
         buildInputs = [
         ];
