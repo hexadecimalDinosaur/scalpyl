@@ -42,13 +42,13 @@ jobs:
       run: |
         python -m build
     - name: Upload commit distributions
-      uses: actions/upload-artifact@v4
+      uses: forgejo/upload-artifact@v4
       with:
         name: commit-${{ forge.event.after }}-dists-python-${{ matrix.python-version }}
         path: dist/
       if: ${{ forge.event_name == 'push' }}
     - name: Upload PR distributions
-      uses: actions/upload-artifact@v4
+      uses: forgejo/upload-artifact@v4
       with:
         name: pr-${{ forge.event.number }}-dists-python-${{ matrix.python-version }}
         path: dist/
