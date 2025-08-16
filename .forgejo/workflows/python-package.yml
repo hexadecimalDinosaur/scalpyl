@@ -18,12 +18,12 @@ jobs:
 
     steps:
     - name: Mirror commit running status to GitHub
-      if: ${{ forge.event_name == 'push' && forge.actions }}
+      if: ${{ forge.event_name == 'push' }}
       continue-on-error: true
       run: |
         curl -L -X POST \
           -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer $SCALPYL_GITHUB_TOKEN" \
+          -H "Authorization: Bearer ${{ secrets.SCALPYL_GITHUB_TOKEN }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           https://api.github.com/repos/hexadecimalDinosaur/scalpyl/statuses/${{ forge.event.after }} \
           -d '{"state":"pending", "target_url":"${{ forge.server_url }}/${{ forge.repository }}/actions/runs/${{ forge.event.run_id }}/job/${{ forge.job }}", "context":"Codeberg Forgejo Actions", "description":"test (${{ matrix.python-version }})"}
@@ -64,7 +64,7 @@ jobs:
         path: dist/
       if: ${{ forge.event_name == 'pull_request' }}
     - name: Mirror commit success status to GitHub
-      if: ${{ forge.event_name == 'push' && success() && forge.actions }}
+      if: forge.event_name == 'push' && cancelled()
       continue-on-error: true
       run: |
         curl -L -X POST \
@@ -75,12 +75,12 @@ jobs:
           -d '{"state":"success", "target_url":"${{ forge.server_url }}/${{ forge.repository }}/actions/runs/${{ forge.event.run_id }}/job/${{ forge.job }}", "context":"Codeberg Forgejo Actions", "description":"test (${{ matrix.python-version }})"}
         - name: Mirror commit success status to GitHub
     - name: Mirror commit failure status to GitHub
-      if: ${{ forge.event_name == 'push' && failure() && forge.actions }}
+      if: forge.event_name == 'push' && failure()
       continue-on-error: true
       run: |
         curl -L -X POST \
           -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer $SCALPYL_GITHUB_TOKEN" \
+          -H "Authorization: Bearer ${{ secrets.SCALPYL_GITHUB_TOKEN }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           "https://api.github.com/repos/hexadecimalDinosaur/scalpyl/statuses/$FORGEJO_SHA" \
           -d '{"state":"failure", "target_url":"${{ forge.server_url }}/${{ forge.repository }}/actions/runs/${{ forge.event.run_id }}/job/${{ forge.job }}", "context":"Codeberg Forgejo Actions", "description":"test (${{ matrix.python-version }})"}
