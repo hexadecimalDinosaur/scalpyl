@@ -1,12 +1,9 @@
-# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
 name: Python package
 
 on:
   push:
     branches: [ "main" ]
-    paths: [ "src/**", "pyproject.toml", ".github/workflows/python-package.yml" ]
+    paths: [ "src/**", "pyproject.toml", ".forgejo/workflows/python-package.yml" ]
   pull_request:
     branches: [ "main" ]
     paths: [ "src/**", "pyproject.toml" ]
@@ -47,12 +44,12 @@ jobs:
     - name: Upload commit distributions
       uses: actions/upload-artifact@v4
       with:
-        name: commit-${{ github.event.after }}-dists-python-${{ matrix.python-version }}
+        name: commit-${{ forge.event.after }}-dists-python-${{ matrix.python-version }}
         path: dist/
-      if: ${{ github.event_name == 'push' }}
+      if: ${{ forge.event_name == 'push' }}
     - name: Upload PR distributions
       uses: actions/upload-artifact@v4
       with:
-        name: pr-${{ github.event.number }}-dists-python-${{ matrix.python-version }}
+        name: pr-${{ forge.event.number }}-dists-python-${{ matrix.python-version }}
         path: dist/
-      if: ${{ github.event_name == 'pull_request' }}
+      if: ${{ forge.event_name == 'pull_request' }}
