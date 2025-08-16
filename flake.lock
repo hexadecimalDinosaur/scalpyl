@@ -20,20 +20,45 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 0,
-        "narHash": "sha256-jhZDfXVKdD7TSEGgzFJQvEEZ2K65UMiqW5YJ2aIqxMA=",
-        "path": "/nix/store/bhiwv7346m46p0xir6wk8xiz9k5gvj76-source",
-        "type": "path"
+        "lastModified": 1750111231,
+        "narHash": "sha256-3a7Tha/RwYlzH/v3PJrG7+HjOj4c6YOv2K8sqdGsHVQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e6f23dc08d3624daab7094b701aa3954923c6bbb",
+        "type": "github"
       },
       "original": {
-        "id": "nixpkgs-unstable",
-        "type": "indirect"
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e6f23dc08d3624daab7094b701aa3954923c6bbb",
+        "type": "github"
+      }
+    },
+    "nur": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1755288671,
+        "narHash": "sha256-3uAU+dCgOeTfKQdlFIfHq84EPgDKUt+izbQPpelv/7Y=",
+        "owner": "hexadecimalDinosaur",
+        "repo": "nur",
+        "rev": "f41d13ef03e755ef4daf97c44c036a70f1f09ef0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hexadecimalDinosaur",
+        "repo": "nur",
+        "type": "github"
       }
     },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "nur": "nur"
       }
     },
     "systems": {
