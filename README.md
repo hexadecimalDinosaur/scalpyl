@@ -10,3 +10,5 @@ The following are the goals for the development of this project, as this project
 * Integrations with unpacker and deobfuscation tools like [pyinstxtractor-ng](https://github.com/pyinstxtractor/pyinstxtractor-ng) to enable the analysis of executable binaries and obfuscated bytecode
 * Provide an interface for patching Python on a bytecode level
 * Easy to use graphical interface similar to those found in [dnSpy](https://github.com/dnSpy/dnSpy) and [Recaf](https://github.com/Col-E/Recaf)
+
+Current progress on these goals can be found in a project [here](https://codeberg.org/hexadecimalDinosaur/scalpyl/projects/22924)
