@@ -35,12 +35,11 @@
         x-python  # 1.5.2
         xasm  # 1.2.1.dev0
         pyinstxtractor-ng  # 2025.1.6
-        dearpygui
+        dearpygui  # 2.0.0b2
         pylingual  # 0.1.0
 
         jupyter
         ipython
-        jupyter
         rich
 
         # dev tools

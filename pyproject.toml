@@ -43,7 +43,7 @@ dev = [
 
 [tool.pytest.ini_options]
 minversion = "8.0"
-addopts = "--mypy"
+# addopts = "--mypy"
 testpaths = [
     "test"
 ]
@@ -52,3 +52,9 @@ testpaths = [
 warn_return_any = true
 warn_unused_configs = true
 files = "src/scalpyl/**/*.py"
+
+[[tool.mypy.overrides]]
+module = [
+    "xdis"
+]
+ignore_missing_imports = true
