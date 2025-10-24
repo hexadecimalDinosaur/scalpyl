@@ -12,9 +12,13 @@ class Disassembler(metaclass=ABCMeta):
         ...
 
     def load_block(self, code_obj: CodeType | CodeBlock, recursive: bool=True) -> DisassembledCode:
-        if isinstance(code_obj, CodeBlock):
-            code_obj = code_obj.code
         block = DisassembledCode()
+        if isinstance(code_obj, CodeBlock):
+            block.version_tuple = code_obj.version_tuple
+            block.timestamp = code_obj.timestamp
+            block.is_pypy = code_obj.is_pypy
+
+            code_obj = code_obj.code
 
         block.filename = code_obj.co_filename
         block.name = code_obj.co_name

@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any, Optional, Sequence
 from types import CodeType
 import inspect
 from platform import python_version_tuple
@@ -72,8 +72,8 @@ class CodeBlock:
 
 
 class DisassembledCode:
-    filename: str = None
-    name: str = None
+    filename: Optional[str] = None
+    name: Optional[str] = None
     firstlineno: int
 
     consts: tuple[Any, ...]
@@ -89,8 +89,14 @@ class DisassembledCode:
     stacksize: int
     flags: CodeFlags
 
-    instructions: tuple[Instruction, ...]
+    _instruction_store: dict[str, Instruction]
+    _order: list[str]
+
     children: tuple["DisassembledCode", ...]
+
+    version_tuple: tuple = python_version_tuple()
+    timestamp: Optional[int] = None
+    is_pypy: bool = False
 
     def __init__(self):
         self.firstlineno = 1
@@ -105,3 +111,26 @@ class DisassembledCode:
         self.stacksize = 0
         self.flags = CodeFlags(0)
         self.children = tuple()
+        self._instruction_store = {}
+        self._order = []
+
+    @property
+    def instructions(self) -> tuple[Instruction]:
+        return tuple(self._instruction_store[instruction_id] for instruction_id in self._order)
+
+    @instructions.setter
+    def instructions(self, value: Sequence[Instruction]):
+        self._order.clear()
+        for i in value:
+            self._instruction_store[i.id] = i
+            self._order.append(i.id)
+
+    def __bytes__(self) -> bytes:
+        b = bytes()
+        for instruction_id in self._order:
+            b += self._instruction_store[instruction_id].raw
+        return b
+
+    @property
+    def code(self):
+        return bytes(self)
